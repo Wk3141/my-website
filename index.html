@@ -1,15 +1,265 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Awesome Website</title>
     <style>
-        body { font-family: Arial; text-align: center; padding: 50px; }
-        h1 { color: #0066cc; }
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 60px 50px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .icon {
+            font-size: 72px;
+            margin-bottom: 20px;
+            display: block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            color: #2d3748;
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .version-tag {
+            display: inline-block;
+            background: #edf2f7;
+            color: #4a5568;
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+
+        .tech-item {
+            background: #f7fafc;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: #4a5568;
+            font-weight: 500;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin: 30px 0 20px;
+            padding: 15px;
+            background: #f0fff4;
+            border-radius: 12px;
+            border: 2px solid #c6f6d5;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: #48bb78;
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        .status-text {
+            color: #22543d;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .footer-text {
+            margin-top: 25px;
+            color: #a0aec0;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-text span {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 25px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .icon {
+                font-size: 56px;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .tech-stack {
+                gap: 10px;
+            }
+            
+            .tech-item {
+                font-size: 0.75rem;
+                padding: 6px 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            .icon {
+                font-size: 48px;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>🚀 Welcome to My CI/CD Website!aaaaa</h1>
-    <p>Deployed automatically via GitHub Actions + Docker + AWS</p>
-    <p>Version: 1.0</p>
+    <div class="container">
+        <span class="badge">🚀 Live on AWS</span>
+        
+        <span class="icon">🎨</span>
+        
+        <h1>Welcome to My Website</h1>
+        
+        <p class="subtitle">
+            Deployed automatically via <strong>CI/CD Pipeline</strong><br>
+            Powered by GitHub Actions + Docker + AWS
+        </p>
+        
+        <div class="version-tag">
+            📦 Version 1.0.0
+        </div>
+        
+        <div class="tech-stack">
+            <span class="tech-item">🐳 Docker</span>
+            <span class="tech-item">⚡ GitHub Actions</span>
+            <span class="tech-item">☁️ AWS ECR</span>
+            <span class="tech-item">🖥️ AWS EC2</span>
+        </div>
+        
+        <div class="status-bar">
+            <span class="status-dot"></span>
+            <span class="status-text">✅ Deployment Status: Successfully Deployed</span>
+        </div>
+        
+        <div class="footer-text">
+            <span>❤️</span> Deployed on <span>September 02, 2026</span>
+        </div>
+    </div>
 </body>
 </html>

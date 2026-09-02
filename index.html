@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Awesome Website</title>
     <style>
-        /* Reset and base styles */
+        /* ===== CSS RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -18,247 +18,703 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0a0e1a;
             padding: 20px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 30px;
-            padding: 60px 50px;
-            max-width: 700px;
+        /* ===== ANIMATED PARTICLE BACKGROUND ===== */
+        body::before,
+        body::after {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.3;
+            animation: floatBg 8s ease-in-out infinite alternate;
+        }
+
+        body::before {
+            background: radial-gradient(circle, #667eea, transparent 70%);
+            top: -200px;
+            left: -200px;
+        }
+
+        body::after {
+            background: radial-gradient(circle, #f093fb, transparent 70%);
+            bottom: -200px;
+            right: -200px;
+            animation-delay: 4s;
+        }
+
+        @keyframes floatBg {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(50px, 50px) scale(1.2);
+            }
+        }
+
+        /* ===== FLOATING PARTICLES ===== */
+        .particles {
+            position: absolute;
             width: 100%;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
-            transform: translateY(0);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: fadeInUp 0.8s ease-out;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 0;
         }
 
-        .container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: particleFloat 15s infinite linear;
+        }
+
+        .particle:nth-child(1) {
+            width: 4px;
+            height: 4px;
+            left: 10%;
+            top: 20%;
+            animation-duration: 18s;
+            animation-delay: 0s;
+        }
+        .particle:nth-child(2) {
+            width: 6px;
+            height: 6px;
+            left: 30%;
+            top: 60%;
+            animation-duration: 22s;
+            animation-delay: 2s;
+        }
+        .particle:nth-child(3) {
+            width: 3px;
+            height: 3px;
+            left: 50%;
+            top: 10%;
+            animation-duration: 20s;
+            animation-delay: 4s;
+        }
+        .particle:nth-child(4) {
+            width: 5px;
+            height: 5px;
+            left: 70%;
+            top: 70%;
+            animation-duration: 25s;
+            animation-delay: 1s;
+        }
+        .particle:nth-child(5) {
+            width: 4px;
+            height: 4px;
+            left: 90%;
+            top: 30%;
+            animation-duration: 19s;
+            animation-delay: 3s;
+        }
+        .particle:nth-child(6) {
+            width: 7px;
+            height: 7px;
+            left: 20%;
+            top: 80%;
+            animation-duration: 23s;
+            animation-delay: 5s;
+        }
+        .particle:nth-child(7) {
+            width: 3px;
+            height: 3px;
+            left: 60%;
+            top: 40%;
+            animation-duration: 21s;
+            animation-delay: 7s;
+        }
+        .particle:nth-child(8) {
+            width: 5px;
+            height: 5px;
+            left: 80%;
+            top: 90%;
+            animation-duration: 24s;
+            animation-delay: 2s;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translate(0, 0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(100px, -200px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .container {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(40px);
+            border-radius: 40px;
+            padding: 60px 50px;
+            max-width: 750px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 
+                0 40px 80px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+
+        /* Glow border effect */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #667eea, #f093fb, #4facfe, #667eea);
+            background-size: 400% 400%;
+            border-radius: 42px;
+            z-index: -1;
+            opacity: 0.3;
+            animation: borderGlow 6s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0% {
+                background-position: 0% 50%;
+                opacity: 0.3;
+            }
+            50% {
+                background-position: 100% 50%;
+                opacity: 0.6;
+            }
+            100% {
+                background-position: 0% 50%;
+                opacity: 0.3;
+            }
         }
 
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(60px) scale(0.95);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
+        /* ===== BADGE ===== */
         .badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 6px 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            color: #ccd6f6;
+            padding: 8px 24px;
             border-radius: 50px;
             font-size: 12px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            margin-bottom: 25px;
+            animation: pulseBadge 3s ease-in-out infinite;
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background: #48bb78;
+            border-radius: 50%;
+            display: inline-block;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.2;
+            }
+        }
+
+        @keyframes pulseBadge {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+            }
+        }
+
+        /* ===== ICON ===== */
+        .icon-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin-bottom: 20px;
         }
 
         .icon {
-            font-size: 72px;
-            margin-bottom: 20px;
-            display: block;
-            animation: pulse 2s infinite;
+            font-size: 80px;
+            display: inline-block;
+            animation: floatIcon 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(102, 126, 234, 0.3));
         }
 
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
+        @keyframes floatIcon {
+            0%,
             100% {
-                transform: scale(1);
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-8px) rotate(-3deg);
+            }
+            75% {
+                transform: translateY(-8px) rotate(3deg);
             }
         }
 
+        /* ===== TITLE ===== */
         h1 {
-            color: #2d3748;
-            font-size: 2.8rem;
+            color: #ffffff;
+            font-size: 3.2rem;
             font-weight: 800;
             margin-bottom: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #f093fb 50%, #4facfe 100%);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: gradientShift 4s ease-in-out infinite;
+            line-height: 1.2;
         }
 
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* ===== SUBTITLE ===== */
         .subtitle {
-            color: #718096;
-            font-size: 1.2rem;
+            color: #8892b0;
+            font-size: 1.15rem;
             margin-bottom: 30px;
-            line-height: 1.6;
+            line-height: 1.8;
+            font-weight: 300;
         }
 
+        .subtitle strong {
+            color: #ccd6f6;
+            font-weight: 600;
+        }
+
+        /* ===== VERSION TAG ===== */
         .version-tag {
             display: inline-block;
-            background: #edf2f7;
-            color: #4a5568;
-            padding: 8px 24px;
+            background: rgba(255, 255, 255, 0.04);
+            color: #8892b0;
+            padding: 8px 28px;
             border-radius: 50px;
-            font-size: 0.95rem;
-            font-weight: 600;
+            font-size: 0.9rem;
+            font-weight: 500;
             margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s ease;
+            cursor: default;
         }
 
+        .version-tag:hover {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: rgba(102, 126, 234, 0.2);
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.1);
+        }
+
+        /* ===== TECH STACK ===== */
         .tech-stack {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             flex-wrap: wrap;
             margin: 30px 0;
         }
 
         .tech-item {
-            background: #f7fafc;
-            padding: 8px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px 22px;
             border-radius: 50px;
             font-size: 0.85rem;
-            color: #4a5568;
+            color: #ccd6f6;
             font-weight: 500;
-            border: 2px solid #e2e8f0;
-            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tech-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea, #f093fb);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: 50px;
         }
 
         .tech-item:hover {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            transform: translateY(-4px) scale(1.05);
+            border-color: transparent;
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.3);
         }
 
+        .tech-item:hover::before {
+            opacity: 1;
+        }
+
+        .tech-item span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .tech-item:hover span {
+            color: white;
+        }
+
+        /* ===== STATUS BAR ===== */
         .status-bar {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 8px;
-            margin: 30px 0 20px;
-            padding: 15px;
-            background: #f0fff4;
-            border-radius: 12px;
-            border: 2px solid #c6f6d5;
+            gap: 12px;
+            margin: 35px 0 25px;
+            padding: 18px 25px;
+            background: rgba(72, 187, 120, 0.04);
+            border-radius: 16px;
+            border: 1px solid rgba(72, 187, 120, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .status-bar:hover {
+            background: rgba(72, 187, 120, 0.08);
+            border-color: rgba(72, 187, 120, 0.15);
+            transform: scale(1.01);
         }
 
         .status-dot {
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             background: #48bb78;
             border-radius: 50%;
-            animation: blink 1.5s infinite;
+            animation: pulseDot 2s ease-in-out infinite;
+            box-shadow: 0 0 30px rgba(72, 187, 120, 0.3);
+            flex-shrink: 0;
         }
 
-        @keyframes blink {
-            0%, 100% {
+        @keyframes pulseDot {
+            0%,
+            100% {
+                transform: scale(1);
                 opacity: 1;
+                box-shadow: 0 0 30px rgba(72, 187, 120, 0.3);
             }
             50% {
-                opacity: 0.3;
+                transform: scale(0.7);
+                opacity: 0.5;
+                box-shadow: 0 0 10px rgba(72, 187, 120, 0.1);
             }
         }
 
         .status-text {
-            color: #22543d;
+            color: #48bb78;
             font-weight: 600;
             font-size: 0.95rem;
+            letter-spacing: 0.3px;
         }
 
+        .status-text .highlight {
+            color: #68d391;
+        }
+
+        /* ===== STATS ROW ===== */
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 25px 0 20px;
+            padding: 10px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: block;
+            background: linear-gradient(135deg, #667eea, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #495670;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        .stat-divider {
+            color: #2d3748;
+            font-size: 1.5rem;
+        }
+
+        /* ===== FOOTER ===== */
         .footer-text {
             margin-top: 25px;
-            color: #a0aec0;
+            color: #495670;
             font-size: 0.85rem;
             letter-spacing: 0.5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
-        .footer-text span {
+        .footer-text .heart {
+            color: #f093fb;
+            animation: heartBeat 1.5s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes heartBeat {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            25% {
+                transform: scale(1.2);
+            }
+            50% {
+                transform: scale(1);
+            }
+            75% {
+                transform: scale(1.15);
+            }
+        }
+
+        .footer-text .date {
             color: #667eea;
             font-weight: 600;
         }
 
-        /* Responsive design */
+        .footer-text .separator {
+            color: #2d3748;
+        }
+
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .container {
                 padding: 40px 25px;
+                border-radius: 30px;
             }
-            
+
             h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
-            
+
             .icon {
-                font-size: 56px;
+                font-size: 60px;
             }
-            
+
             .subtitle {
                 font-size: 1rem;
             }
-            
-            .tech-stack {
-                gap: 10px;
+
+            .stats-row {
+                gap: 20px;
+                flex-wrap: wrap;
             }
-            
+
+            .stat-divider {
+                display: none;
+            }
+
+            .tech-stack {
+                gap: 8px;
+            }
+
             .tech-item {
                 font-size: 0.75rem;
-                padding: 6px 14px;
+                padding: 8px 16px;
             }
         }
 
         @media (max-width: 480px) {
             .container {
-                padding: 30px 20px;
+                padding: 30px 18px;
+                border-radius: 24px;
             }
-            
+
             h1 {
-                font-size: 1.6rem;
+                font-size: 1.7rem;
             }
-            
+
             .icon {
                 font-size: 48px;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+            }
+
+            .badge {
+                font-size: 10px;
+                padding: 6px 16px;
+            }
+
+            .version-tag {
+                font-size: 0.8rem;
+                padding: 6px 20px;
+            }
+
+            .status-bar {
+                padding: 14px 18px;
+                flex-direction: row;
+            }
+
+            .status-text {
+                font-size: 0.85rem;
+            }
+
+            .stats-row {
+                gap: 15px;
+            }
+
+            .stat-number {
+                font-size: 1.2rem;
+            }
+
+            .footer-text {
+                font-size: 0.75rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Floating Particles -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Main Container -->
     <div class="container">
-        <span class="badge">🚀 Live on AWS</span>
-        
-        <span class="icon">🎨</span>
-        
-        <h1>Welcome to My Website</h1>
-        
+        <!-- Badge -->
+        <div class="badge">
+            <span class="badge-dot"></span>
+            Live on AWS
+        </div>
+
+        <!-- Icon -->
+        <div class="icon-wrapper">
+            <span class="icon">🚀</span>
+        </div>
+
+        <!-- Title -->
+        <h1>Welcome to My<br />Awesome Website</h1>
+
+        <!-- Subtitle -->
         <p class="subtitle">
-            Deployed automatically via <strong>CI/CD Pipeline</strong><br>
-            Powered by GitHub Actions + Docker + AWS
+            Deployed automatically via <strong>CI/CD Pipeline</strong><br />
+            Powered by <strong>GitHub Actions</strong> + <strong>Docker</strong> + <strong>AWS</strong>
         </p>
-        
-        <div class="version-tag">
-            📦 Version 1.0.0
-        </div>
-        
+
+        <!-- Version Tag -->
+        <div class="version-tag">📦 Version 1.0.0</div>
+
+        <!-- Tech Stack -->
         <div class="tech-stack">
-            <span class="tech-item">🐳 Docker</span>
-            <span class="tech-item">⚡ GitHub Actions</span>
-            <span class="tech-item">☁️ AWS ECR</span>
-            <span class="tech-item">🖥️ AWS EC2</span>
+            <div class="tech-item"><span>🐳 Docker</span></div>
+            <div class="tech-item"><span>⚡ GitHub Actions</span></div>
+            <div class="tech-item"><span>☁️ AWS ECR</span></div>
+            <div class="tech-item"><span>🖥️ AWS EC2</span></div>
         </div>
-        
+
+        <!-- Status Bar -->
         <div class="status-bar">
             <span class="status-dot"></span>
-            <span class="status-text">✅ Deployment Status: Successfully Deployed</span>
+            <span class="status-text">
+                ✅ <span class="highlight">Deployment Status:</span> Successfully Deployed
+            </span>
         </div>
-        
+
+        <!-- Stats Row -->
+        <div class="stats-row">
+            <div class="stat-item">
+                <span class="stat-number">99.9%</span>
+                <span class="stat-label">Uptime</span>
+            </div>
+            <span class="stat-divider">|</span>
+            <div class="stat-item">
+                <span class="stat-number">⚡</span>
+                <span class="stat-label">Auto Deploy</span>
+            </div>
+            <span class="stat-divider">|</span>
+            <div class="stat-item">
+                <span class="stat-number">🔄</span>
+                <span class="stat-label">CI/CD Pipeline</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
         <div class="footer-text">
-            <span>❤️</span> Deployed on <span>September 02, 2026</span>
+            <span class="heart">❤️</span>
+            Deployed on <span class="date">September 02, 2026</span>
+            <span class="separator">•</span>
+            Made with <span class="heart">✨</span> passion
         </div>
     </div>
 </body>

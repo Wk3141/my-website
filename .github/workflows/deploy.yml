@@ -5,9 +5,8 @@ on:
     branches: [ main ]
 
 env:
-  AWS_REGION: us-east-1
+  AWS_REGION: eu-north-1
   ECR_REPOSITORY: my-website-repo
-  # Updated with your provided IP
   EC2_HOST: 13.60.21.85
 
 jobs:
@@ -38,17 +37,37 @@ jobs:
       run: |
         docker push ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
     
-    - name: Deploy to EC2
+    - name: Deploy to EC2 (Amazon Linux)
       uses: appleboy/ssh-action@v0.1.5
       with:
         host: ${{ env.EC2_HOST }}
-        username: ec2-user # Change to 'ubuntu' if your server is Ubuntu
+        username: ec2-user
         key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         script: |
-          # Added sudo to fix the "no basic auth credentials" error
+          # AWS CLI is pre-installed on Amazon Linux
+          # Configure AWS credentials for ECR access
+          mkdir -p ~/.aws
+          
+          cat > ~/.aws/credentials << 'EOF'
+          [default]
+          aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          EOF
+          
+          cat > ~/.aws/config << 'EOF'
+          [default]
+          region = ${{ env.AWS_REGION }}
+          output = json
+          EOF
+          
+          # Login to ECR
           aws ecr get-login-password --region ${{ env.AWS_REGION }} | sudo docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}
           
+          # Pull and deploy
           sudo docker pull ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
           sudo docker stop my-website || true
           sudo docker rm my-website || true
           sudo docker run -d -p 80:80 --name my-website --restart=always ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
+          
+          # Clean up old images
+          sudo docker image prune -f
